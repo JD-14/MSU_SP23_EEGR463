@@ -650,15 +650,15 @@ Answer the following question:
 
 Next, we compile our test by running the following in the `baremetal_test` directory:
 ```
-<your username>@bwrcrdsl-#:$chipyard/generators/customAccRoCC/baremetal_test $ riscv64-unknown-elf-gcc -fno-common -fno-builtin-printf -specs=htif_nano.specs -c functionalTest.c
-<your username>@bwrcrdsl-#:$chipyard/generators/customAccRoCC/baremetal_test $ riscv64-unknown-elf-gcc -static -specs=htif_nano.specs functionalTest.o -o functionalTest.riscv
+root@<CID>:~/$chipyard/generators/customAccRoCC/baremetal_test# riscv64-unknown-elf-gcc -fno-common -fno-builtin-printf -specs=htif_nano.specs -c functionalTest.c
+root@<CID>:~/$chipyard/generators/customAccRoCC/baremetal_test# riscv64-unknown-elf-gcc -static -specs=htif_nano.specs functionalTest.o -o functionalTest.riscv
 ```
 
 Here, we're using a version of gcc with the target architecture set to riscv (without an OS underneath). This comes as part of the riscv toolchain. Since we want a self-contained binary, we compile it statically. 
 
 Now, let's disassemble the executable `functionalTest` by running:
 ```
-<your username>@bwrcrdsl-#:$chipyard/generators/customAccRoCC/baremetal_test $ riscv64-unknown-elf-objdump -d functionalTest.riscv | less
+root@<CID>:~/$chipyard/generators/customAccRoCC/baremetal_test# riscv64-unknown-elf-objdump -d functionalTest.riscv | less
 ```
 
 Inspect the output. Answer the following question:
@@ -666,14 +666,14 @@ Inspect the output. Answer the following question:
 **5. What is the address of the `ROCC_INSTRUCTION_DSS`?** 
 Looking through `<main>` and looking for `opcode0` should be helpful.
 
-It's time to run our functional test. Let us use VCS this time around. Navigate to `$chipyard/sims/vcs`, run:
+It's time to run our functional test. Let us use VCS this time around. Navigate to `$chipyard/sims/verilator`, run:
 ```
-<your username>@bwrcrdsl-#:$chipyard/sims/vcs $ bsub -Is -q ee194 make -j16 CONFIG=CustomAccRoCCConfig BINARY=../../generators/customAccRoCC/baremetal_test/functionalTest.riscv run-binary-debug
+root@<CID>:~/$chipyard/sims/verilator# make -j16 CONFIG=CustomAccRoCCConfig BINARY=../../generators/customAccRoCC/baremetal_test/functionalTest.riscv run-binary-debug
 ```
 
 It might take a few minutes to build and compile the test harness, and run the simulation.
 
-Inside, `$chipyard/sims/vcs`, for each config,
+Inside, `$chipyard/sims/verilator`, for each config,
 - `generated-src` contains the test harness
 - `output` contains output files (log/output/waveform) for each config.
 
