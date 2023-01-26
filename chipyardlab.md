@@ -575,19 +575,19 @@ To compile the design and run our tests, we use the Scala Build Tool (sbt). `$ch
 
 In a new terminal window inside **the root Chipyard directory**, run:
 ```
-<your username>@bwrcrdsl-#:$chipyard $ bsub -Is -q ee194 sbt
+root@<CID>:~/:$chipyard $ sbt
 ```
 
 Give it a minute or so to launch the sbt console and load all settings.
 
 In the sbt console, set the current project by running:
 ```
-sbt:chipyardRoot> project customAccRoCC
+>.... project customAccRoCC
 ```
 
 To compile the design, run `compile` in the sbt console, as follows:
 ```
-sbt:customAccRoCC> compile
+>.... compile
 ```
 This might take a while as it compiles all dependencies of the project.
 
@@ -598,7 +598,7 @@ sbt:customAccRoCC> test
 
 Exit the sbt console with:
 ```
-sbt:customAccRoCC> exit 
+>.... exit 
 ```
 
 (You can use `testOnly <test names>` to run specific ones.) Test outputs will be visible in the console. You can find waveforms and test files in `$chipyard/test_run_dir/<test_name>`.
