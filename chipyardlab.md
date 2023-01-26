@@ -54,72 +54,16 @@ This lab also presumes much of its GitLab interaction will occur via SSH. While 
 
 ## Getting Started
 
-First, we will need to setup our Chipyard workspace. All of our work will occur on the BWRC compute cluster. Make sure you have access and can connect to the BWRC compute cluster before starting this lab. For this lab, and the course in general, please work in the `/tools/C/<your username>` directory, where you should use your EECS IRIS account username. If you do not see a directory under your username, contact [Brian Richards](bcr@berkeley.edu). <b>DO NOT</b> work out of the home directory
+0) To run the commands in this lab, first, you need to connect to the server using this [instructions](https://docs.google.com/document/d/1p9nPGBZg54fmxHZoMlqi2ENIEXBt1xeB/edit?usp=share_link&ouid=110946650262659636795&rtpof=true&sd=true).
 
-0) SSH into a BWRC login server: `bwrcrdsl-#.eecs.berkeley.edu` (Make sure you have the [campus VPN](https://security.berkeley.edu/services/bsecure/bsecure-remote-access-vpn) on, if accessing the BWRC cluster off campus.)
-
-1) Run 
+1) Once you log into the server, then run the following command
 ```
- <your username>@bwrcrdsl-#:/tools/C/<your username> $ source /tools/C/ee290-dev-sp23/ee290-tools-env.sh
+ [<your username>@capc-cadence ~]$ docker run --name <your username> -it --privileged tapeout_dev:version1.0 bash
 ```
 
-This script is responsible for setting up the tools and environment used in this lab (and more generally by the course). Specifically, it does the following right now:
-1. Conda is an open-source package and environment management system that allows you to quickly install, run, and update packages and their dependencies. We activate the base conda environment for the course's conda instance. 
-1. We use commercial tools such as VCS from a common installation location on the BWRC compute cluster. We add this location to the path and source relevant licenses.
-
-TAs will manage further changes to this script to simplify environment/workflow setup in the coming weeks.
-
-
-<b>You will need to source this script in every new terminal & at the start of every work session.</b> 
-
-2) Clone the lab chipyard repo <a href="https://github.com/ucb-bar/sp23-chipyard-lab-dev/tree/lab-dev">here</a>.
+2) Run 
 ```
- <your username>@bwrcrdsl-#:/tools/C/<your username> $ git clone https://github.com/ucb-bar/sp23-chipyard-lab-dev.git
-```
-
-3) Run
-```
- <your username>@bwrcrdsl-#:/tools/C/<your username> $cd sp23-chipyard-lab-dev
-```
-
-Optionally, set the repo path as an [environment variable](https://www.geeksforgeeks.org/environment-variables-in-linux-unix/) by running `export chipyard=/tools/C/<your username>/sp23-chipyard-lab-dev`. We will be referring to the repo path as `$chipyard` from now on. If you do not wish to set up this environment variable, you will need to write out `/tools/C/<your username>/sp23-chipyard-lab-dev` every time we use `$chipyard`.
-
-4) Run
-
-```
- <your username>@bwrcrdsl-#:/tools/C/<your username>/sp23-chipyard-lab-dev $ git checkout lab-dev
-```
-to switch to the lab branch.
-
-5) Run 
-```
-<your username>@bwrcrdsl-#:/tools/C/<your username>/sp23-chipyard-lab-dev $ conda activate /tools/C/raghavgupta/intech22/sp23/chipyard-lab-sp23/.conda-env
-```
-
-In Chipyard, we use the Conda package manager to help manage system dependencies. Conda allows users to create an “environment” that holds system dependencies like `make`, `gcc`, etc. We've also installed a pre-built RISC-V toolchain into it. We want to ensure that everyone in the class is using the same version of everything, so everyone will be using the same conda environment by activating the environment specified above. <b>You will need to do this in every new terminal & at the start of every work session.</b>
-
-
-
-6) Run 
-
-```
-<your username>@bwrcrdsl-#:/tools/C/<your username>/sp23-chipyard-lab-dev $ ./scripts/init-submodules-no-riscv-tools.sh
-
-```
-
-The `init-subodules-no-riscv-tools.sh` script will initialize and checkout all of the necessary `git submodules`. This will also validate that you are on a tagged branch, otherwise it will prompt for confirmation. When updating Chipyard to a new version, you will also want to rerun this script to update the submodules. Using git directly will try to initialize all submodules; this is not recommended unless you expressly desire this behavior.
-
-`git submodules` allow you to keep other Git repositories as subdirectories of another Git repository. For example, the above script initiates the `rocket-chip` submodule which is it's own Git repository that you can look at <a href="https://github.com/chipsalliance/rocket-chip/tree/44b0b8249279d25bd75ea693b725d9ff1b96e2ab">here</a>. If you look at the `.gitmodules` file at `$chipyard`, you can see
-```
-[submodule "rocket-chip"]
-	path = generators/rocket-chip
-	url = https://github.com/chipsalliance/rocket-chip.git
-```
-which defines this behavior. Read more about `git submodules` [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
-
-7) Run 
-```
-<your username>@bwrcrdsl-#:/tools/C/<your username>/sp23-chipyard-lab-dev/ $ source ./env.sh
+ root@<CID>:~# source chipyard/env.sh
 ```
 
 An `env.sh` file should exist in the top-level repository (`$chipyard`). This file sets up necessary environment variables such as `PATH` for the current Chipyard repository. This is required by future Chipyard steps such as the `make` system to function correctly.
@@ -129,6 +73,16 @@ Over the course of the semester, we will find ourselves working with different C
 <!--- An `env.sh` file should exist in the top-level repository (`$chipyard`). This file sets up necessary environment variables such as needed for future Chipyard steps (needed for the `make` system to work properly). Once the script is run, the `PATH`, `RISCV`, and `LD_LIBRARY_PATH` environment variables will be set properly for the toolchain requested. -->
 
 You should source the `env.sh` file in the Chipyard repository you wish to work in <!--- in your [`.bashrc`](https://www.digitalocean.com/community/tutorials/bashrc-file-in-linux) or equivalent environment setup file to get the proper variables, or directly include it in your current environment --> by **running the above command every time you open a new terminal or start a new work session**.
+
+
+3) Run
+```
+  root@<CID>:~# $cd sp23-chipyard-lab-dev
+```
+
+Optionally, set the repo path as an [environment variable](https://www.geeksforgeeks.org/environment-variables-in-linux-unix/) by running `export chipyard=/tools/C/<your username>/sp23-chipyard-lab-dev`. We will be referring to the repo path as `$chipyard` from now on. If you do not wish to set up this environment variable, you will need to write out `/tools/C/<your username>/sp23-chipyard-lab-dev` every time we use `$chipyard`.
+
+
 
 ## Chipyard Repo Tour
 
@@ -396,9 +350,9 @@ You can look at examples of how your own Chisel modules or verilog black-box mod
 
 Let's run some commands! 
 
-> *So far, we have been working on login servers. From this point on, we will be running some more compute-intensive commands on compute servers. Prepend all compute heavy commands (everything ran in the `vlsi/` directory & `sims/` directories) with `bsub -Is -q ee194` This submits the job to a special queue of compute servers for the class so we don't crash the login servers and mess up ongoing research work (or cause each other to lose valuable work :))* 
+We'll be running the `CONFIG=RocketConfig` config (the `-j16` executes the run with more threads). All commands should be run in `$chipyard/sims//verilator#`. 
 
-We'll be running the `CONFIG=RocketConfig` config (the `-j16` executes the run with more threads). All commands should be run in `$chipyard/sims/vcs`. Run
+Run
 ```
 <your username>@bwrcrdsl-#:$chipyard/sims/vcs $ bsub -Is -q ee194 make CONFIG=RocketConfig -j16
 ```
