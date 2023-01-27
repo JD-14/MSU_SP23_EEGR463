@@ -82,6 +82,22 @@ You should source the `env.sh` file in the Chipyard repository you wish to work 
 
 Optionally, set the repo path as an [environment variable](https://www.geeksforgeeks.org/environment-variables-in-linux-unix/) by running `export chipyard=/tools/C/<your username>/sp23-chipyard-lab-dev`. We will be referring to the repo path as `$chipyard` from now on. If you do not wish to set up this environment variable, you will need to write out `/tools/C/<your username>/sp23-chipyard-lab-dev` every time we use `$chipyard`.
 
+## Useful Commands
+
+1) If you need to exit your Docker container, then enter 'exit' or hit 'Ctrl + d' to exit the container.
+```
+  root@<CID>:~# exit
+```
+
+2) To return to your Docker container run
+```
+  [<your username>@capc-cadence ~]$ docker exec -u 0 -it --privileged <your username> bash
+```
+
+3) In case you forget to source your 'env.sh' you can source them by running this command from any directory
+```
+  root@<CID>:~# source ~/chipyard/env.sh
+```
 
 
 ## Chipyard Repo Tour
@@ -843,7 +859,7 @@ Then, navigate to `$chipyard/sims/verilator` and run `make CONFIG=VecAddTLRocket
 2. Your entire C refenence solution.
 3. A screenshot of your test passing.c
 
-# END OF CHIPYARD LAB (due EoD 1/27)
+# END OF CHIPYARD LAB (due EoD 02/01/23)
 
  <!--
 ## VLSI Flow
