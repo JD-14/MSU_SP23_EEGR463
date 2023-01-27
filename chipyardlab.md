@@ -56,7 +56,7 @@ This lab also presumes much of its GitLab interaction will occur via SSH. While 
 
 0) To run the commands in this lab, first, you need to connect to the server using this [instructions](https://docs.google.com/document/d/1p9nPGBZg54fmxHZoMlqi2ENIEXBt1xeB/edit?usp=share_link&ouid=110946650262659636795&rtpof=true&sd=true).
 
-1) Once you log into the server, then run the following command
+1) Once you log into the server, then run the following command (DO NOT RUN THIS COMMMAND TO REOPEN THE CONTAINER). Note: Refer to the 'Useful Commands' to reopen Docker container.
 ```
  [<your username>@capc-cadence ~]$ docker run --name <your username> -it --privileged tapeout_dev:version1.0 bash
 ```
