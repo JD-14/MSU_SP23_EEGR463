@@ -579,7 +579,7 @@ Most simulation testing infrastructure is based on setting signals, advancing th
 <details>
 <summary>In no particular order, here are the required lines of code:</summary>
 <br>
-<pre><code>"h_0F_0D_0B_09_07_05_03_01".U</code></pre>
+<pre><code>true.B</code></pre>
 <pre><code>c.clock.step(1)</code></pre>
 <pre><code>true.B</code></pre>
 </details>
