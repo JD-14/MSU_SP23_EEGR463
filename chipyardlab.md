@@ -91,7 +91,7 @@ Optionally, set the repo path as an [environment variable](https://www.geeksforg
 
 2) To return to your Docker container run
 ```
-  [<your username>@capc-cadence ~]$ docker exec -u 0 -it --privileged <your username> bash
+  [<your username>@capc-cadence ~] docker exec -u 0 -it --privileged <your username> bash
 ```
 
 3) In case you forget to source your 'env.sh' you can source them by running this command from any directory
@@ -674,7 +674,7 @@ Here, we're using a version of gcc with the target architecture set to riscv (wi
 
 Now, let's disassemble the executable `functionalTest` by running:
 ```
-root@<CID>:~/$chipyard/generators/customAccRoCC/baremetal_test# riscv64-unknown-elf-objdump -d functionalTest.riscv | less
+root@<CID>:~/$chipyard/generators/customAccRoCC/baremetal_test# riscv64-unknown-elf-objdump -d functionalTest.riscv
 ```
 
 Inspect the output. Answer the following question:
@@ -755,9 +755,9 @@ Most of the logic of the accelerator will go in `VecAddMMIOChiselModule`. This m
 ##### TODO: add more detail, expecially about section 1 (regarding DecoupledIO, etc.), maybe some more explaining the IO signals.
 
 * `RegField.r(2, status)` is used to create a 2-bit, read-only register that captures the current value of the status signal when read.
-* `RegField.r(params.width, gcd)` “connects” the decoupled handshaking interface gcd to a read-only memory-mapped register. When this register is read via MMIO, the ready signal is asserted. This is in turn connected to output_ready on the GCD module through the glue logic.
 * `RegField.w(params.width, x)` exposes a plain register via MMIO, but makes it write-only.
 * `RegField.w(params.width, y)` associates the decoupled interface signal y with a write-only memory-mapped register, causing y.valid to be asserted when the register is written.
+* `RegField.r(params.width, vec_add)` “connects” the decoupled handshaking interface vec\_add to a read-only memory-mapped register. When this register is read via MMIO, the ready signal is asserted. This is in turn connected to output_ready on the VecAdd module through the glue logic.
 
 RegField exposes polymorphic `r` and `w` methods that allow read- and write-only memory-mapped registers to be interfaced to hardware in multiple ways.
 
@@ -803,8 +803,33 @@ Now, we have too hook up everything to the SoC. Rocket Chip accomplishes this us
 The `LazyModule` trait runs setup code that must execute before all the hardware gets elaborated. For a simple memory-mapped peripheral, this just involves connecting the peripheral’s TileLink node to the MMIO crossbar.
 
 **Copy paste the following into `ExampleMMIO.scala`**
+```
+trait CanHavePeripheryVecAdd { this: BaseSubsystem =>
+  private val portName = "vecadd"
 
-
+  // Only build if we are using the TL (nonAXI4) version
+  val vecadd = p(VecAddKey) match {
+    case Some(params) => {
+      if (params.useAXI4) {
+        val vecadd = LazyModule(new VecAddAXI4(params, pbus.beatBytes)(p))
+        pbus.toSlave(Some(portName)) {
+          vecadd.node :=
+          AXI4Buffer () :=
+          TLToAXI4 () :=
+          // toVariableWidthSlave doesn't use holdFirstDeny, which TLToAXI4() needsx
+          TLFragmenter(pbus.beatBytes, pbus.blockBytes, holdFirstDeny = true)
+        }
+        Some(vecadd)
+      } else {
+        val vecadd = LazyModule(new VecAddTL(params, pbus.beatBytes)(p))
+        pbus.toVariableWidthSlave(Some(portName)) { vecadd.node }
+        Some(vecadd)
+      }
+    }
+    case None => None
+  }
+}
+```
 ```
 trait CanHavePeripheryVecAddModuleImp extends LazyModuleImp {
   val outer: CanHavePeripheryVecAdd
