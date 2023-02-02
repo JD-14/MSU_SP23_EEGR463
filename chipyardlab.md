@@ -926,9 +926,13 @@ Then, navigate to `$chipyard/sims/verilator` and run `make CONFIG=VecAddTLRocket
 
 **Please submit:**
 1. The entirety of the code for `VecAddMMIOChiselModule`.
-2. Your entire C refenence solution.
-3. A screenshot of your test passing.c
-
+2. Your entire C reference solution.
+3. A screenshot of your tests `** PASSED **` for CONFIGS (**Inspect the log and output for each config**):
+   
+   a) CustomAccRoCCConfig
+   
+   b) VecAddTLRocketConfig
+   
 # END OF CHIPYARD LAB (due EoD 02/06/23)
 
  <!--
