@@ -657,27 +657,27 @@ Before you proceed, or if you have gone through this section, please follow thes
 ```
   root@<CID>:~# git config --global user.email "Your MSU email"
 ```
+3) Run
+```
+  root@<CID>:~# git add .
+```
 4) Run
-```
-  root@<CID>:~# cd sp23-chipyard-lab-dev git add .
-```
-6) Run
 ```
   root@<CID>:~# git commit -m "Docker V1.1"
 ```
-7) Run, note this command will return a configuration message. Continue to step 8.
+5) Run, note this command will return a configuration message. Continue to step 8.
 ```
 git pull
 ```
-8) Run
+6) Run
 ```
 git config pull.rebase true
 ```
-9) Run
+7) Run
 ```
 git pull
 ```
-10) After running step 10, you should see a merging conflict message. To solve this issue go to the indicated files and delete the conflict markers `<<<<<<<, =======, >>>>>>>`. Then save and quit the file. To view all the conflicted files, run 'git status'. Once you delete the markers, run `git add "file path&name"` for all the files with conflicts. Finally, run `git commit -m "Docker v1.2".` 
+8) After running step 10, you should see a merging conflict message. To solve this issue go to the indicated files and delete the conflict markers `<<<<<<<, =======, >>>>>>>`. Then save and quit the file. To view all the conflicted files, run 'git status'. Once you delete the markers, run `git add "file path&name"` for all the files with conflicts. Finally, run `git commit -m "Docker v1.2".` 
 
 CONTINUE with the Baremetal Functional Testing Section.
 
