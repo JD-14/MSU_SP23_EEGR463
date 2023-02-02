@@ -783,6 +783,15 @@ Navigate to `$chipyard/generators/chipyard/src/main/scala/ExampleMMIO.scala` whe
 Most of the logic of the accelerator will go in `VecAddMMIOChiselModule`. This module will be wrapped by the `VecAddModule` which interfaces with the rest of the SoC and determines where our MMIO registers are placed.
 
 **Add the necessary FSM logic into `VecAddMMIOChiselModule`** Notice how `VecAddMMIOChiselModule` has the trait `HasVecAddIO`. The bundle of input.output signals in `HasVecAddIO` are how the accelerator interaces wit the rest of the SoC.
+**Copy paste the following FSM logic into `VecAddMMIOChiselModule`**
+```
+when (state === s_idle && io.input_valid) {
+  temp_x := io.x
+  temp_y := io.y
+} .elsewhen (state === s_run) {
+  vec_add := temp_x + temp_y
+}
+```
 
 **Inspect `VecAddModule`** There are 3 main sections: setup, hooking up input/outputs, and a regmap. Setup defines the kinds of wire/signals we're working with. We hook up input/output signals as necessary: we feed x and y into the accelerator along with a rest signal and the clock; we expect the result of the addition; we also use a ready/valid interface to signify when the accelerator is busy or avaiable to process fruther instructions. `VecAddTopIO` is used only to see whether the accelerator is busy or not. Then we have the regmap: 
 ##### TODO: add more detail, expecially about section 1 (regarding DecoupledIO, etc.), maybe some more explaining the IO signals.
