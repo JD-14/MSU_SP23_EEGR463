@@ -793,7 +793,7 @@ when (state === s_idle && io.input_valid) {
 }
 ```
 
-**Inspect `VecAddModule`** There are 3 main sections: setup, hooking up input/outputs, and a regmap. Setup defines the kinds of wire/signals we're working with. We hook up input/output signals as necessary: we feed x and y into the accelerator along with a rest signal and the clock; we expect the result of the addition; we also use a ready/valid interface to signify when the accelerator is busy or avaiable to process fruther instructions. `VecAddTopIO` is used only to see whether the accelerator is busy or not. Then we have the regmap: 
+**Inspect `VecAddModule`** There are 3 main sections: setup, hooking up input/outputs, and a regmap. Setup defines the kinds of wire/signals we're working with. We hook up input/output signals as necessary: we feed x and y into the accelerator along with a reset signal and the clock; we expect the result of the addition; we also use a ready/valid interface to signify when the accelerator is busy or avaiable to process fruther instructions. `VecAddTopIO` is used only to see whether the accelerator is busy or not. Then we have the regmap: 
 ##### TODO: add more detail, expecially about section 1 (regarding DecoupledIO, etc.), maybe some more explaining the IO signals.
 
 * `RegField.r(2, status)` is used to create a 2-bit, read-only register that captures the current value of the status signal when read.
@@ -840,7 +840,7 @@ class VecAddAXI4(params: VecAddParams, beatBytes: Int)(implicit p: Parameters)
 
 ```
 
-Now, we have too hook up everything to the SoC. Rocket Chip accomplishes this using the cake pattern. This basically involves placing code inside traits. In the Rocket Chip cake, there are two kinds of traits: a `LazyModule` trait and a module implementation trait.
+Now, we have too hook up everything to the SoC. Rocket Chip accomplishes this using the cake pattern. This basically involves placing code inside traits. In the Rocket Chip cake, there are two kinds of traits: a `LazyModule` trait and a `module implementation` trait.
 
 The `LazyModule` trait runs setup code that must execute before all the hardware gets elaborated. For a simple memory-mapped peripheral, this just involves connecting the peripheral’s TileLink node to the MMIO crossbar.
 
