@@ -683,7 +683,7 @@ git config pull.rebase true
 ```
 git pull
 ```
-8) After running step 10, you should see a merging conflict message. To solve this issue go to the indicated files and delete the conflict markers `<<<<<<<, =======, >>>>>>>`. Then save and quit the file. To view all the conflicted files, run 'git status'. Once you delete the markers, run `git add "file path&name"` for all the files with conflicts. Finally, run `git commit -m "Docker v1.2".` 
+8) After running step 10, you should see a merging conflict message. To solve this issue go to the indicated files and delete the conflict markers `<<<<<<< HEAD, =======, >>>>>>> branch (message)`. Then save and quit the file. To view all the conflicted files, run `git status`. Once you delete the markers, run `git add "file path&name"` for all the files with conflicts. Finally, run `git commit -m "Docker v1.2".` 
 
 CONTINUE with the Baremetal Functional Testing Section.
 
