@@ -77,7 +77,7 @@ You should source the `env.sh` file in the Chipyard repository you wish to work 
 
 3) Run
 ```
-  root@<CID>:~# $cd sp23-chipyard-lab-dev
+  root@<CID>:~# cd sp23-chipyard-lab-dev
 ```
 
 Optionally, set the repo path as an [environment variable](https://www.geeksforgeeks.org/environment-variables-in-linux-unix/) by running `export chipyard=/tools/C/<your username>/sp23-chipyard-lab-dev`. We will be referring to the repo path as `$chipyard` from now on. If you do not wish to set up this environment variable, you will need to write out `/tools/C/<your username>/sp23-chipyard-lab-dev` every time we use `$chipyard`.
@@ -648,7 +648,40 @@ class CustomAccRoCCConfig extends Config(
 )
 ```
 
-### Baremetal Functional Testing
+# Baremetal Functional Testing
+
+### Debug:
+Before you proceed, or if you have gone through this section, please follow these steps to update the lab files and fix the test/running errors. Note, if you reach the end of the lab with errors, then undo all your edits by creating a copy of those files, commenting out code fragments, and deleting generated output files & executables.
+1) Navigate to `$chipyard'.
+2) Run
+```
+  root@<CID>:~# git config --global user.email "Your MSU email"
+```
+4) Run
+```
+  root@<CID>:~# cd sp23-chipyard-lab-dev git add .
+```
+6) Run
+```
+  root@<CID>:~# git commit -m "Docker V1.1"
+```
+7) Run, note this command will return a configuration message. Continue to step 8.
+```
+git pull
+```
+8) Run
+```
+git config pull.rebase true
+```
+9) Run
+```
+git pull
+```
+10) After running step 10, you should see a merging conflict message. To solve this issue go to the indicated files and delete the conflict markers `<<<<<<<, =======, >>>>>>>`. Then save and quit the file. To view all the conflicted files, run 'git status'. Once you delete the markers, run `git add "file path&name"` for all the files with conflicts. Finally, run `git commit -m "Docker v1.2".` 
+
+CONTINUE with the Baremetal Functional Testing Section.
+
+
 
 Inside `$chipyard/generators/customAccRoCC`, let us inspect `baremetal_test/functionalTest.c`. `rocc.h` contains definitions for different kinds of RoCC instructions and the custom opcodes. We use the same test case as before, but we test integration of the whole system as values are loaded into registers on the Rocket core, sent to the RoCC accelerator, and results from the accelerator are loaded into a register. 
 
