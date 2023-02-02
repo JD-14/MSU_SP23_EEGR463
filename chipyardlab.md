@@ -647,6 +647,12 @@ class CustomAccRoCCConfig extends Config(
   /* YOUR CODE HERE */
 )
 ```
+<details>
+<summary>Config fragments for CustomAccRoCCConfig</summary>
+<br>
+<pre><code>new  customAccRoCC.WithCustomAccRoCC ++</code></pre>
+<pre><code>new RocketConfig</code></pre>
+</details>
 
 # Baremetal Functional Testing
 
