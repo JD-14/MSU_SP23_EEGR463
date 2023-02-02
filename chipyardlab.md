@@ -898,7 +898,10 @@ class VecAddTLRocketConfig extends Config(
 
 ## Testing Your MMIO
 
-Now we're ready to test our accelerator! We write out test program in `$chipyard/tests/examplemmio.c` Look through the file and make sure you understand the flow of the file. **Add in a C refenence solution for our accelerator**
+Now we're ready to test our accelerator! We write out test program in `$chipyard/tests/examplemmio.c` Look through the file and make sure you understand the flow of the file. 
+
+**In the examplemmio.c add (write C code) in a C `refenence` solution for our accelerator**
+ >*Hint: Fill in the VECADD_ref function on line 9. See what operation the accelerator does on x and y. The solution is a single line of code.* 
 
 To generate the binary file of the test, run two following two commands in the terminal
 
