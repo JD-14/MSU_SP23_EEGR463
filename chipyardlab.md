@@ -106,7 +106,7 @@ Optionally, set the repo path as an [environment variable](https://www.geeksforg
 However, we will still give a general repo tour to get you familiar with Chipyard as a whole.
 
 
-###### *VCS is a propietory simulation tool provided by Synopsys while Verilator is an open-source tool. There are some subtle differences form the user perspective, but VCS is usually faster so we'll be using that throuhgout the course. Everthing done with VCS can easily also be done in Verilator (the subdirectory structure is the same as well).
+###### *VCS is a proprietary simulation tool provided by Synopsys while Verilator is an open-source tool. There are some subtle differences form the user perspective, but VCS is usually faster so we'll be using that throuhgout the course. Everthing done with VCS can easily also be done in Verilator (the subdirectory structure is the same as well).
 ```
  $chipyard/
   generators/ <------- library of Chisel generators
